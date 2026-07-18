@@ -1,24 +1,94 @@
 import 'package:flutter/material.dart';
-import 'package:bsk_tasks/database_sim/product.dart';
 
 class ProductCard extends StatelessWidget {
+  int stockRemaining = 10;
 
-  const ProductCard({super.key});
+  void decrementStock() {
+    stockRemaining--;
+    print(stockRemaining);
+  }
+
+  ProductCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Row(
+    return Container(
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+      ),
+      child: Column(
         children: [
-          Image.asset(
-            'assets/images/keyboard.jpg',
-            width: 150,
+          Stack(
+            children: [
+              Image.asset('assets/images/keyboard.jpg'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.green,
+                    ),
+                    child: Text(
+                      'Trending',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  CircleAvatar(
+                    child: IconButton(
+                      onPressed: decrementStock,
+                      icon: Icon(Icons.favorite, color: Colors.red),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-          Image.network(
-            'https://cdn.dribbble.com/userupload/45459361/file/31af338d3ba8ad22ba8b15b51d139ae0.jpg?resize=1504x1504&vertical=center',
-            width: 200,
+          SizedBox(height: 10),
+          Text(
+            'Mechanical Keyboard',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
           ),
-          Text('Keyboard'),
+          SizedBox(height: 10),
+          Text(
+            'Wireless mechanical gaming keyboard, made for gamers by gamers.',
+            style: TextStyle(color: Colors.grey, fontSize: 14),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '\$19.99',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextButton(
+                  onPressed: stockRemaining > 0 ? decrementStock : () {},
+                  child: Text(
+                    stockRemaining > 0 ? 'Add to Cart' : 'Out of Stock',
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
