@@ -1,5 +1,17 @@
+import 'package:bsk_tasks/app_styles.dart';
+import 'package:bsk_tasks/stateful_widgets_trial/banner_image.dart';
+import 'package:bsk_tasks/stateful_widgets_trial/banner_slider_image.dart';
+import 'package:bsk_tasks/stateful_widgets_trial/products_grid.dart';
 import 'package:flutter/material.dart';
-import 'package:bsk_tasks/stateful_widgets_trial/product_card.dart';
+
+List<BannerSliderImage> images = [
+  BannerSliderImage(imagePath: 'assets/images/keyboard.jpg'),
+  BannerSliderImage(imagePath: 'assets/images/keyboard2.jpg'),
+  BannerSliderImage(imagePath: 'assets/images/keyboard3.jpg'),
+  BannerSliderImage(imagePath: 'assets/images/keyboard4.jpg'),
+  BannerSliderImage(imagePath: 'assets/images/iphone.jpg'),
+  BannerSliderImage(imagePath: 'assets/images/headphones.jpg'),
+];
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
@@ -9,7 +21,7 @@ class ShopScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.menu, color: Colors.white),
-        title: Text('Shop'),
+        title: Text('Not Jumia'),
         centerTitle: true,
         backgroundColor: Colors.orange,
         titleTextStyle: TextStyle(
@@ -19,55 +31,18 @@ class ShopScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: GridView.count(
-        crossAxisCount: 2,
-        mainAxisSpacing: 5,
-        crossAxisSpacing: 5,
-        childAspectRatio: 0.4,
+      body: ListView(
         children: [
-          const ProductCard(
-            name: 'Headphones',
-            price: 38.99,
-            filePath: 'assets/images/headphones.jpg',
-            remainingStock: 10,
-            description:
-            'Sony WH-CH520 Wireless Bluetooth On-Ear '
-                'with Mic for Phone Call, Black',
-            label: 'Trending',
+          Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: Text('Currently Trending', style: AppStyles.carouselTitle),
           ),
-          const ProductCard(
-            name: 'iPhone 16',
-            price: 799.99,
-            filePath: 'assets/images/iphone.jpg',
-            remainingStock: 10,
-            description:
-            'Apple iPhone 16 (128 GB) - Pink with Face ID | '
-                'Tax Paid | 2 Years Official Warranty',
+          BannerSlider(images: images),
+          Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: Text('Products', style: AppStyles.carouselTitle),
           ),
-          const ProductCard(
-            name: 'Keyboard',
-            price: 19.99,
-            filePath: 'assets/images/keyboard.jpg',
-            remainingStock: 10,
-          ),
-          const ProductCard(
-            name: 'Keyboard',
-            price: 19.99,
-            filePath: 'assets/images/keyboard2.jpg',
-            remainingStock: 10,
-          ),
-          const ProductCard(
-            name: 'Keyboard',
-            price: 19.99,
-            filePath: 'assets/images/keyboard.jpg',
-            remainingStock: 10,
-          ),
-          const ProductCard(
-            name: 'Keyboard',
-            price: 19.99,
-            filePath: 'assets/images/keyboard.jpg',
-            remainingStock: 10,
-          ),
+          ProductsGrid(),
         ],
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bsk_tasks/stateful_widgets_trial/card_label.dart';
+import 'package:bsk_tasks/app_styles.dart';
 
 class ProductCard extends StatefulWidget {
   final String name;
@@ -46,100 +48,90 @@ class _ProductCardState extends State<ProductCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-      ),
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              Image.asset(widget.filePath),
-              if (widget.label.isNotEmpty)
-                Positioned(
-                  top: 10,
-                  left: 8,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.green,
+    return SizedBox(
+      height: 320, // Fixed height for all cards
+      child: Card(
+        shadowColor: Colors.black.withOpacity(0.2),
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 2, // Image takes 2/3 of the space
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(12),
+                      ),
+                      child: Image.asset(widget.filePath, fit: BoxFit.contain),
                     ),
-                    child: Text(
-                      widget.label,
-                      style: TextStyle(color: Colors.white),
+                    if (widget.label.isNotEmpty)
+                      Positioned(
+                        top: 10,
+                        left: 8,
+                        child: CardLabel(label: widget.label),
+                      ),
+                    Positioned(
+                      top: 4,
+                      right: 8,
+                      child: CircleAvatar(
+                        radius: 16,
+                        backgroundColor: Colors.white.withOpacity(0.9),
+                        child: IconButton(
+                          onPressed: toggleFavorite,
+                          iconSize: 24,
+                          padding: EdgeInsets.zero,
+                          icon: Icon(
+                            isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_outline,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              Positioned(
-                top: 4,
-                right: 8,
-                child: CircleAvatar(
-                  child: IconButton(
-                    onPressed: toggleFavorite,
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_outline,
-                      color: Colors.red,
-                    ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          SizedBox(height: 10),
-          Text(
-            widget.name,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
             ),
-          ),
-          if (widget.description.isNotEmpty)
-            Column(
+            Text(widget.name, style: AppStyles.cardTitleStyle),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(height: 10),
-                Text(
-                  widget.description,
-                  maxLines: 2,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                    overflow: TextOverflow.ellipsis,
+                Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Text(
+                    '\$${widget.price}',
+                    style: AppStyles.cardPriceTextStyle,
                   ),
-                  textAlign: TextAlign.center,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(4),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black54,
+                      padding: EdgeInsets.all(8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: remainingStock > 0 ? decrementStock : null,
+                    child: Text(
+                      remainingStock > 0 ? 'Add to Cart' : 'Out of Stock',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ),
                 ),
               ],
             ),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '\$${widget.price}',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: TextButton(
-                  onPressed: remainingStock > 0 ? decrementStock : () {},
-                  child: Text(
-                    remainingStock > 0 ? 'Add to Cart' : 'Out of Stock',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+            SizedBox(height: 3),
+          ],
+        ),
       ),
     );
   }
