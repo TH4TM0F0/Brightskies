@@ -7,6 +7,7 @@ environment:
   sdk: ^3.12.2
 
 dependencies:
+  carousel_slider: ^5.1.2
   flutter:
     sdk: flutter
 
@@ -18,5 +19,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/keyboard.jpg
+    - assets/images/
 
