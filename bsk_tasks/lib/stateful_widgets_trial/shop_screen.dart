@@ -1,8 +1,10 @@
 import 'package:bsk_tasks/app_styles.dart';
 import 'package:bsk_tasks/stateful_widgets_trial/banner_image.dart';
 import 'package:bsk_tasks/stateful_widgets_trial/banner_slider_image.dart';
+import 'package:bsk_tasks/stateful_widgets_trial/bloc/cart_bloc.dart';
 import 'package:bsk_tasks/stateful_widgets_trial/products_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 List<BannerSliderImage> images = [
   BannerSliderImage(imagePath: 'assets/images/keyboard.jpg'),
@@ -18,6 +20,7 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartBloc = context.read<CartBloc>();
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.menu, color: Colors.white),
