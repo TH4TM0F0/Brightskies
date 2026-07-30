@@ -20,19 +20,7 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartBloc = context.read<CartBloc>();
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.menu, color: Colors.white),
-        title: Text('Not Jumia'),
-        centerTitle: true,
-        backgroundColor: Colors.orange,
-        titleTextStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 28,
-          fontStyle: FontStyle.italic,
-        ),
-      ),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
